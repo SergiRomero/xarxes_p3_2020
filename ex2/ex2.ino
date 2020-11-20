@@ -20,6 +20,10 @@ void loop()
 
 }
 
+/**
+ * If not conected, conects to wifi.
+ * Global variables are used as credentials.
+ */
 void connectToWiFi(void) 
 {
     if (WiFi.status() != WL_CONNECTED) {
@@ -39,6 +43,12 @@ void connectToWiFi(void)
     }
 }
 
+
+/**
+ * Asks users for network SSID and password to connect to network.
+ * User is asked by console (EOL char must be removed).
+ * Stores data on global variables.
+ */
 void wifiNetworkSelection(void)
 {
     if (WiFi.status() !=WL_CONNECTED) {
@@ -48,7 +58,7 @@ void wifiNetworkSelection(void)
         Serial.println("SSID? >");
         while (!Serial.available());
         String ssid = Serial.readString();
-        ssid[ssid.length() - 1] = '\0';
+        ssid[ssid.length() - 1] = '\0'; //REMOVE ENDLINE CHAR
         _ssid = ssid;
         Serial.print("SSID > ");
         Serial.println(_ssid);
@@ -63,20 +73,5 @@ void wifiNetworkSelection(void)
         Serial.print("PWD > ");
         Serial.println(_pass);
         delay(1000);
-    }
-}
-
-void strToChar(String txt, char* c)
-{
-    if (WiFi.status() != WL_CONNECTED) {
-        Serial.print("Converting to char " + txt);
-        int len = txt.length();
-        Serial.println(len);
-        Serial.println("***********");
-        c = (char*) malloc(len);
-        for (int i = 0; i < len; i ++){
-            c[i] = txt[i];
-            Serial.print(c[i]);
-        }
     }
 }
